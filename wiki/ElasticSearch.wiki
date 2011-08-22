@@ -42,3 +42,5 @@ This is just the beginning but I intend to eventually store the data so that it 
 
 3. Now that the files are in the right place, <a href="http://www.adamestrada.net/2011/08/22/how-to-build-gdal/">click here</a> for instructions on how to build GDAL.<br/>
 4.  *Note:* the only dependency is libcurl.
+
+==[http://code.google.com/p/ogr2elasticsearch/wiki/PageName Usage Examples]==
