@@ -1,0 +1,8 @@
+#summary Bounding Box example
+
+= Introduction =
+
+Add your content here.
+
+= Details =
+
