@@ -1,12 +1,12 @@
 /******************************************************************************
  * $Id $
  *
- * Project:  Elastic Search Translator
- * Purpose:  
- * Author:   
+ * Project:  ElasticSearch Translator
+ * Purpose:
+ * Author:
  *
  ******************************************************************************
- * Copyright (c) 2008, Adam Estrada
+ * Copyright (c) 2011, Adam Estrada
  *
  * Permission is hereby granted, free of charge, to any person obtaining a
  * copy of this software and associated documentation files (the "Software"),
@@ -187,7 +187,7 @@ OGRElasticDataSource::DeleteIndex (const CPLString & url)
   //curl_easy_setopt(curl, CURLOPT_STDERR, myNullFile);
   //curl_easy_setopt(curl, CURLOPT_FAILONERROR, 1);
   //curl_easy_setopt(curl, CURLOPT_NOPROGRESS, 1);
-  //curl_easy_setopt(curl, CURLOPT_MUTE, 1); 
+  //curl_easy_setopt(curl, CURLOPT_MUTE, 1);
 
   curl_easy_setopt (curl, CURLOPT_URL, url.c_str ());
   curl_easy_setopt (curl, CURLOPT_CUSTOMREQUEST, "DELETE");
@@ -237,7 +237,7 @@ OGRElasticDataSource::UploadFile (const CPLString & url,
   //curl_easy_setopt(curl, CURLOPT_STDERR, NULL);
   //curl_easy_setopt(curl, CURLOPT_FAILONERROR, 1);
   //curl_easy_setopt(curl, CURLOPT_NOPROGRESS, 1);
-  //curl_easy_setopt(curl, CURLOPT_MUTE, 1); 
+  //curl_easy_setopt(curl, CURLOPT_MUTE, 1);
 
   curl_easy_setopt (curl, CURLOPT_POSTFIELDSIZE, (curl_off_t) pooh.sizeleft);
 

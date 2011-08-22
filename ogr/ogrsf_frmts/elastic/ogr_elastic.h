@@ -1,12 +1,12 @@
 /******************************************************************************
  * $Id $
  *
- * Project:  Elastic Search Translator
- * Purpose:  
- * Author:   
+ * Project:  ElasticSearch Translator
+ * Purpose:
+ * Author:
  *
  ******************************************************************************
- * Copyright (c) 2008, Adam Estrada
+ * Copyright (c) 2011, Adam Estrada
  *
  * Permission is hereby granted, free of charge, to any person obtaining a
  * copy of this software and associated documentation files (the "Software"),
@@ -52,7 +52,7 @@ class OGRElasticLayer : public OGRLayer
 	char				*pszLayerName;
 
     OGRFeature*        poFeature;
-    
+
   public:
                         OGRElasticLayer(const char *pszFilename,
                                     const char* layerName,
@@ -63,16 +63,16 @@ class OGRElasticLayer : public OGRLayer
 
     void                ResetReading();
     OGRFeature *        GetNextFeature();
-    
+
     OGRErr              CreateFeature( OGRFeature *poFeature );
     OGRErr              CreateField( OGRFieldDefn *poField, int bApproxOK );
 
     OGRFeatureDefn *    GetLayerDefn();
-    
+
     int                 TestCapability( const char * );
-    
+
     OGRSpatialReference *GetSpatialRef();
-    
+
     int                 GetFeatureCount( int bForce );
 
     void                PushIndex();
@@ -90,7 +90,7 @@ class OGRElasticDataSource : public OGRDataSource
 
     OGRElasticLayer**    papoLayers;
     int                 nLayers;
-    
+
     int                 bUseExtensions;
     int                 bWriteHeaderAndFooter;
 
@@ -100,15 +100,15 @@ class OGRElasticDataSource : public OGRDataSource
 
     int                 Open( const char * pszFilename,
                               int bUpdate );
-    
-    int                 Create( const char *pszFilename, 
+
+    int                 Create( const char *pszFilename,
                               char **papszOptions );
-    
+
     const char*         GetName() { return pszName; }
 
     int                 GetLayerCount() { return nLayers; }
     OGRLayer*           GetLayer( int );
-    
+
     OGRLayer *          CreateLayer( const char * pszLayerName,
                                     OGRSpatialReference *poSRS,
                                     OGRwkbGeometryType eType,
@@ -143,7 +143,7 @@ class OGRElasticDriver : public OGRSFDriver
     OGRDataSource*      CreateDataSource( const char * pszName, char **papszOptions );
     int                 DeleteDataSource( const char *pszFilename );
     int                 TestCapability( const char * );
-    
+
 };
 
 

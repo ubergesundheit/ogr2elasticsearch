@@ -1,12 +1,12 @@
 /******************************************************************************
  * $Id $
  *
- * Project:  Elastic Search Translator
- * Purpose:  
- * Author:   
+ * Project:  ElasticSearch Translator
+ * Purpose:
+ * Author:
  *
  ******************************************************************************
- * Copyright (c) 2008, Adam Estrada
+ * Copyright (c) 2011, Adam Estrada
  *
  * Permission is hereby granted, free of charge, to any person obtaining a
  * copy of this software and associated documentation files (the "Software"),
