@@ -5,7 +5,7 @@
 
 This driver follows the standard [http://www.gdal.org/ogr2ogr.html ogr2ogr] usage convention.
 
-= Details =
+= Usage =
 
 *Basic Transform:*
 {{{
@@ -13,6 +13,7 @@ ogr2ogr -progress -f "ElasticSearch" http://localhost:9200 my_shapefile.shp
 }}}
 
 *Create a Mapping File:*
+The mapping file allows you to modify the mapping according to the [http://www.elasticsearch.org/guide/reference/mapping/core-types.html ElasticSearch field-specific types]
 {{{
 ogr2ogr -progress --config ES_WRITEMAP /path/to/file/map.txt -f "ElasticSearch" http://localhost:9200 my_shapefile.shp
 }}}
