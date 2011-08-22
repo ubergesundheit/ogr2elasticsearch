@@ -1,0 +1,9 @@
+#summary One-sentence summary of this page.
+
+= Introduction =
+
+ElasticSearch is an easy to use and very scalable search index. This project is intended to allow the conversion from any of the supported OGR formats to an ElasticSearch index or cluster.
+
+For a full list of OGR formats, please click here: http://www.gdal.org/ogr/ogr_formats.html
+
+This is just the beginning but I intend to eventually store the data so that it can be retrieved as GeoJSON for use in modern mapping applications.
