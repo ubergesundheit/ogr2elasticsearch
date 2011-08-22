@@ -1,12 +1,12 @@
 /******************************************************************************
  * $Id $
  *
- * Project:  Elastic Search Translator
- * Purpose:  
- * Author:   
+ * Project:  ElasticSearch Translator
+ * Purpose:
+ * Author:
  *
  ******************************************************************************
- * Copyright (c) 2008, Adam Estrada
+ * Copyright (c) 2011, Adam Estrada
  *
  * Permission is hereby granted, free of charge, to any person obtaining a
  * copy of this software and associated documentation files (the "Software"),
@@ -30,7 +30,7 @@
 #include "ogr_elastic.h"
 #include "cpl_conv.h"
 
-CPL_CVSID ("$Id: ogrelasticdriver.cpp 15919 2008-12-08 21:02:58Z rouault $");
+CPL_CVSID ("$Id: ogrelasticdriver.cpp 15919 2011-22-08 21:02:58Z aestrada $");
 
 /************************************************************************/
 /*                           ~OGRElasticDriver()                            */
