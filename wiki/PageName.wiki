@@ -1,0 +1,33 @@
+#summary How to use this driver
+#labels Usage
+
+= Introduction =
+
+This driver follows the standard [http://www.gdal.org/ogr2ogr.html ogr2ogr] usage convention.
+
+= Details =
+
+*Basic Transform:*
+{{{
+ogr2ogr -progress -f "ElasticSearch" http://localhost:9200 my_shapefile.shp
+}}}
+
+*Create a Mapping File:*
+{{{
+ogr2ogr -progress --config ES_WRITEMAP /path/to/file/map.txt -f "ElasticSearch" http://localhost:9200 my_shapefile.shp
+}}}
+
+*Read the Mapping File:*
+{{{
+ogr2ogr -progress --config ES_META /path/to/file/map.txt -f "ElasticSearch" http://localhost:9200 my_shapefile.shp
+}}}
+
+*Bulk Uploading (for larger datasets):*
+{{{
+ogr2ogr -progress --config ES_BULK 10000 -f "ElasticSearch" http://localhost:9200 PG:"host=localhost user=postgres dbname=my_db password=password" "my_table" -nln thetable
+}}}
+
+*Overwrite the current Index:*
+{{{
+ogr2ogr -progress --config ES_OVERWRITE 1 -f "ElasticSearch" http://localhost:9200 PG:"host=localhost user=postgres dbname=my_db password=password" "my_table" -nln thetable
+}}}
