@@ -119,7 +119,7 @@ curl -POST 'http://localhost:9200/county/Feature/_search?pretty=true' -d '{
   "facets": {
     "tag": {
       "terms": {
-        "field": "FEATURE",
+        "field": "COUNTY",
         "count": 10
       }
     }
