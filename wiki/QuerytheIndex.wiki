@@ -72,4 +72,4 @@ term: census
 count: 159
 }
 }}}
- [Next]
+ [http://code.google.com/p/ogr2elasticsearch/wiki/ModifyingtheIndex Modify the Index Mapping]
