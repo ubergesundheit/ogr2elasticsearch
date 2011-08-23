@@ -103,7 +103,9 @@ What you should get is as follows. (map.txt) Go ahead and use [http://jsonlint.c
 }
 }}}
 
-Now run the full import on the shapefile using the '--config ES_META' flag pointing to your map.txt file.
+Now run the full import on the shapefile using the --config ES_META flag pointing to your map.txt file.
 {{{
 ogr2ogr -progress --config ES_META /path/to/file/map.txt -f "ElasticSearch" http://localhost:9200 us_cities_vs._us_county_warning_areas.shp
 }}}
+
+[Query the Index]
