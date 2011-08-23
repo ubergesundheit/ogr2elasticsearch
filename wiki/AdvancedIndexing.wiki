@@ -6,7 +6,7 @@ ElasticSearch is typically not meant for querying geospatial data so what you ge
 
 = Create a Mapping file =
 
-As seen in the [http://code.google.com/p/ogr2elasticsearch/wiki/PageName Usage] page, there is a way to generate a mapping file that can be edited before inserting the data in to the DB. I grabbed a shapefile from Geocommons and placed it [http://code.google.com/p/ogr2elasticsearch/downloads/detail?name=us_cities_vs._us_county_warning_areas.zip&can=2&q=#makechanges here] for testing purposes.
+As seen on the [http://code.google.com/p/ogr2elasticsearch/wiki/PageName Usage] page, there is a way to generate a mapping file that can be edited before inserting the data in to the Index. I grabbed a shapefile from [http://www.geocommons.com Geocommons] and placed it [http://code.google.com/p/ogr2elasticsearch/downloads/detail?name=us_cities_vs._us_county_warning_areas.zip&can=2&q=#makechanges here] for testing purposes.
 
 Download and unzip the file and then run the following command.
 {{{
