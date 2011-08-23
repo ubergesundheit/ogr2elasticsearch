@@ -3,7 +3,7 @@
 
 = Introduction =
 
-ElasticSearch is an easy to use and very scalable search engine. The OGR2ElasticSearch project is intended to allow the conversion from any of the supported <a href="http://www.gdal.org/ogr/ogr_formats.html">OGR</a> formats to an ElasticSearch index or cluster.
+ElasticSearch is an easy to use and very scalable search engine. The OGR2ElasticSearch project is intended to allow the conversion from any of the supported <a href="http://www.gdal.org/ogr/ogr_formats.html">OGR</a> formats to an ElasticSearch single node or cluster.
 
 For a full list of OGR formats, please click here: http://www.gdal.org/ogr/ogr_formats.html
 
@@ -15,7 +15,9 @@ This is just the beginning but I intend to eventually store the data so that it 
 
   * These sources will give you the files needed to add a new driver to build against the latest version of GDAL. 
 
-2. The files you need are located in their respective directories. Start at GDAL root directory and add the following
+2. Now check out GDAL from trunk  {{{svn checkout https://svn.osgeo.org/gdal/trunk/gdal gdal}}}
+
+3. The files you need are located in their respective directories. Start at GDAL root directory and add the following
  * ogr
        * ogrsf_frmts
             * GNUmakefile
@@ -40,7 +42,7 @@ This is just the beginning but I intend to eventually store the data so that it 
                 * ogrsfdriver.cpp
                 * ogrfdriverregistrar.cpp
 
-3. Now that the files are in the right place, <a href="http://www.adamestrada.net/2011/08/22/how-to-build-gdal/">click here</a> for instructions on how to build GDAL.<br/>
-4.  *Note:* the only dependency is libcurl.
+4. Now that the files are in the right place, <a href="http://www.adamestrada.net/2011/08/22/how-to-build-gdal/">click here</a> for instructions on how to build GDAL.<br/>
+5.  *Note:* the only dependency is libcurl.
 
 ==[http://code.google.com/p/ogr2elasticsearch/wiki/PageName Usage Examples]==
