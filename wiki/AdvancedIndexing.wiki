@@ -108,4 +108,4 @@ Now run the full import on the shapefile using the --config ES_META flag pointin
 ogr2ogr -progress --config ES_META /path/to/file/map.txt -f "ElasticSearch" http://localhost:9200 us_cities_vs._us_county_warning_areas.shp
 }}}
 
-[Query the Index]
+[http://code.google.com/p/ogr2elasticsearch/wiki/QuerytheIndex Query the Index]
