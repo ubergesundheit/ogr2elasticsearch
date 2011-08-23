@@ -21,19 +21,19 @@ svn checkout https://svn.osgeo.org/gdal/trunk/gdal gdal
 }}}
 
 3. The files you need are located in their respective directories. Start at GDAL root directory and add the following
- * ogr
-       * ogrsf_frmts
+ * ogr/
+       * ogrsf_frmts/
             * GNUmakefile
             * makefile.vc
             * ogrsf_fmts.h
-            * elastic
+            * elastic/
                  * GNUmakefile
                  * makefile.vc
                  * ogr_elastic.h
                  * ogrelasticdatasource.cpp
                  * ogrelasticdriver.cpp
                  * ogrelasticlayer.cpp
-            * generic
+            * generic/
                 * GNUmakefile
                 * makefile.vc
                 * ogr_attrind.cpp
