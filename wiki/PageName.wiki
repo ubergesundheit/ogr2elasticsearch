@@ -35,3 +35,9 @@ If specified, this will overwrite the current index. Otherwise, the data will be
 {{{
 ogr2ogr -progress --config ES_OVERWRITE 1 -f "ElasticSearch" http://localhost:9200 PG:"host=localhost user=postgres dbname=my_db password=password" "my_table" -nln thetable
 }}}
+
+*Specify several at a time:* <br/>
+Several flags can be set at the same time.
+{{{
+ogr2ogr -progress --config ES_OVERWRITE 1 --config ES_BULK 10000 --config ES_META /path/to/file/map.txt -f "ElasticSearch" http://localhost:9200 PG:"host=localhost user=postgres dbname=my_db password=password" "my_table" -nln thetable
+}}}
