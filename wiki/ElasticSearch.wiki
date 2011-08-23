@@ -15,8 +15,10 @@ This is just the beginning but I intend to eventually store the data so that it 
 
   * These sources will give you the files needed to add a new driver to build against the latest version of GDAL. 
 
-2. Now check out GDAL from trunk
-{{{svn checkout https://svn.osgeo.org/gdal/trunk/gdal gdal}}}
+2. Now check out GDAL from trunk:
+{{{
+svn checkout https://svn.osgeo.org/gdal/trunk/gdal gdal
+}}}
 
 3. The files you need are located in their respective directories. Start at GDAL root directory and add the following
  * ogr
