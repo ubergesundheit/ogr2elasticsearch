@@ -30,13 +30,12 @@
 #include "ogr_elastic.h"
 #include "cpl_conv.h"
 
-CPL_CVSID ("$Id: ogrelasticdriver.cpp 15919 2011-22-08 21:02:58Z aestrada $");
-
 /************************************************************************/
 /*                           ~OGRElasticDriver()                            */
 /************************************************************************/
 
-OGRElasticDriver::~OGRElasticDriver ()
+OGRElasticDriver::~OGRElasticDriver()
+
 {
 }
 
@@ -44,64 +43,51 @@ OGRElasticDriver::~OGRElasticDriver ()
 /*                              GetName()                               */
 /************************************************************************/
 
-const char *
-OGRElasticDriver::GetName ()
+const char *OGRElasticDriver::GetName()
+
 {
-  return "ElasticSearch";
+    return "ElasticSearch";
 }
 
 /************************************************************************/
 /*                                Open()                                */
 /************************************************************************/
 
-OGRDataSource *
-OGRElasticDriver::Open (const char *pszFilename, int bUpdate)
+OGRDataSource *OGRElasticDriver::Open( const char * pszFilename, int bUpdate )
 {
-  return NULL;
+	return NULL;
 }
 
 /************************************************************************/
 /*                          CreateDataSource()                          */
 /************************************************************************/
 
-OGRDataSource *
-OGRElasticDriver::CreateDataSource (const char *pszName, char **papszOptions)
-{
-  OGRElasticDataSource *poDS = new OGRElasticDataSource ();
+OGRDataSource *OGRElasticDriver::CreateDataSource( const char * pszName,
+                                               char **papszOptions )
 
-  if (!poDS->Create (pszName, papszOptions))
+{
+    OGRElasticDataSource   *poDS = new OGRElasticDataSource();
+
+    if( !poDS->Create( pszName, papszOptions ) )
     {
-      delete poDS;
-      poDS = NULL;
+        delete poDS;
+        poDS = NULL;
     }
 
-  return poDS;
-}
-
-/************************************************************************/
-/*                          DeleteDataSource()                          */
-/************************************************************************/
-
-OGRErr
-OGRElasticDriver::DeleteDataSource (const char *pszFilename)
-{
-  if (VSIUnlink (pszFilename) == 0)
-    return OGRERR_NONE;
-  else
-    return OGRERR_FAILURE;
+    return poDS;
 }
 
 /************************************************************************/
 /*                           TestCapability()                           */
 /************************************************************************/
 
-int
-OGRElasticDriver::TestCapability (const char *pszCap)
+int OGRElasticDriver::TestCapability( const char * pszCap )
+
 {
-  if (EQUAL (pszCap, ODrCCreateDataSource))
-    return TRUE;
-  else
-    return FALSE;
+    if( EQUAL(pszCap,ODrCCreateDataSource) )
+        return TRUE;
+    else
+        return FALSE;
 }
 
 
@@ -109,11 +95,11 @@ OGRElasticDriver::TestCapability (const char *pszCap)
 /*                           RegisterOGRElastic()                           */
 /************************************************************************/
 
-void
-RegisterOGRElastic ()
+void RegisterOGRElastic()
+
 {
-  if (!GDAL_CHECK_VERSION ("OGR/Elastic Search driver"))
-    return;
-  OGRSFDriverRegistrar::GetRegistrar ()->
-    RegisterDriver (new OGRElasticDriver);
+    if (! GDAL_CHECK_VERSION("OGR/Elastic Search driver"))
+        return;
+    OGRSFDriverRegistrar::GetRegistrar()->RegisterDriver( new OGRElasticDriver );
 }
+
