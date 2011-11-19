@@ -38,8 +38,7 @@
 
 /************************************************************************/
 
-OGRElasticDataSource::OGRElasticDataSource()
- {
+OGRElasticDataSource::OGRElasticDataSource() {
     papoLayers = NULL;
     nLayers = 0;
     pszName = NULL;
@@ -52,8 +51,7 @@ OGRElasticDataSource::OGRElasticDataSource()
 
 /************************************************************************/
 
-OGRElasticDataSource::~OGRElasticDataSource()
- {
+OGRElasticDataSource::~OGRElasticDataSource() {
     for (int i = 0; i < nLayers; i++)
         delete papoLayers[i];
     CPLFree(papoLayers);
@@ -65,8 +63,7 @@ OGRElasticDataSource::~OGRElasticDataSource()
 
 /************************************************************************/
 
-int OGRElasticDataSource::TestCapability(const char * pszCap)
- {
+int OGRElasticDataSource::TestCapability(const char * pszCap) {
     if (EQUAL(pszCap, ODsCCreateLayer))
         return TRUE;
     else
@@ -78,8 +75,7 @@ int OGRElasticDataSource::TestCapability(const char * pszCap)
 
 /************************************************************************/
 
-OGRLayer *OGRElasticDataSource::GetLayer(int iLayer)
- {
+OGRLayer *OGRElasticDataSource::GetLayer(int iLayer) {
     if (iLayer < 0 || iLayer >= nLayers)
         return NULL;
     else
@@ -94,8 +90,7 @@ OGRLayer *OGRElasticDataSource::GetLayer(int iLayer)
 OGRLayer * OGRElasticDataSource::CreateLayer(const char * pszLayerName,
         OGRSpatialReference *poSRS,
         OGRwkbGeometryType eType,
-        char ** papszOptions)
- {
+        char ** papszOptions) {
     nLayers++;
     papoLayers = (OGRElasticLayer **) CPLRealloc(papoLayers, nLayers * sizeof (OGRElasticLayer*));
     papoLayers[nLayers - 1] = new OGRElasticLayer(pszName, pszLayerName, this, poSRS, TRUE);
@@ -108,8 +103,7 @@ OGRLayer * OGRElasticDataSource::CreateLayer(const char * pszLayerName,
 
 /************************************************************************/
 
-int OGRElasticDataSource::Open(const char * pszFilename, int bUpdateIn)
- {
+int OGRElasticDataSource::Open(const char * pszFilename, int bUpdateIn) {
     CPLError(CE_Failure, CPLE_NotSupported,
             "OGR/Elastic driver does not support opening a file");
     return FALSE;
