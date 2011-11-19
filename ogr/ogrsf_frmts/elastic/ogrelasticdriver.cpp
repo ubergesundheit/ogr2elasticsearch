@@ -32,44 +32,43 @@
 
 /************************************************************************/
 /*                           ~OGRElasticDriver()                            */
+
 /************************************************************************/
 
 OGRElasticDriver::~OGRElasticDriver()
-
-{
+ {
 }
 
 /************************************************************************/
 /*                              GetName()                               */
+
 /************************************************************************/
 
 const char *OGRElasticDriver::GetName()
-
-{
+ {
     return "ElasticSearch";
 }
 
 /************************************************************************/
 /*                                Open()                                */
+
 /************************************************************************/
 
-OGRDataSource *OGRElasticDriver::Open( const char * pszFilename, int bUpdate )
-{
-	return NULL;
+OGRDataSource *OGRElasticDriver::Open(const char * pszFilename, int bUpdate) {
+    return NULL;
 }
 
 /************************************************************************/
 /*                          CreateDataSource()                          */
+
 /************************************************************************/
 
-OGRDataSource *OGRElasticDriver::CreateDataSource( const char * pszName,
-                                               char **papszOptions )
+OGRDataSource *OGRElasticDriver::CreateDataSource(const char * pszName,
+        char **papszOptions)
+ {
+    OGRElasticDataSource *poDS = new OGRElasticDataSource();
 
-{
-    OGRElasticDataSource   *poDS = new OGRElasticDataSource();
-
-    if( !poDS->Create( pszName, papszOptions ) )
-    {
+    if (!poDS->Create(pszName, papszOptions)) {
         delete poDS;
         poDS = NULL;
     }
@@ -79,12 +78,12 @@ OGRDataSource *OGRElasticDriver::CreateDataSource( const char * pszName,
 
 /************************************************************************/
 /*                           TestCapability()                           */
+
 /************************************************************************/
 
-int OGRElasticDriver::TestCapability( const char * pszCap )
-
-{
-    if( EQUAL(pszCap,ODrCCreateDataSource) )
+int OGRElasticDriver::TestCapability(const char * pszCap)
+ {
+    if (EQUAL(pszCap, ODrCCreateDataSource))
         return TRUE;
     else
         return FALSE;
@@ -93,13 +92,13 @@ int OGRElasticDriver::TestCapability( const char * pszCap )
 
 /************************************************************************/
 /*                           RegisterOGRElastic()                           */
+
 /************************************************************************/
 
 void RegisterOGRElastic()
-
-{
-    if (! GDAL_CHECK_VERSION("OGR/Elastic Search driver"))
+ {
+    if (!GDAL_CHECK_VERSION("OGR/Elastic Search driver"))
         return;
-    OGRSFDriverRegistrar::GetRegistrar()->RegisterDriver( new OGRElasticDriver );
+    OGRSFDriverRegistrar::GetRegistrar()->RegisterDriver(new OGRElasticDriver);
 }
 
