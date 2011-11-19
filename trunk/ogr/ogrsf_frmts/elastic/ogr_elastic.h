@@ -38,108 +38,115 @@ class OGRElasticDataSource;
 
 /************************************************************************/
 /*                             OGRElasticLayer                              */
+
 /************************************************************************/
 
-class OGRElasticLayer : public OGRLayer
-{
-    OGRFeatureDefn*			poFeatureDefn;
-    OGRSpatialReference*	poSRS;
-    OGRElasticDataSource*	poDS;
-	CPLString				sIndex;
-	void*					pAttributes;
-    int						nTotalFeatureCount;
-	char*					pszLayerName;
-    OGRFeature*				poFeature;
-    
-  public:
-                        OGRElasticLayer(const char *pszFilename,
-                                    const char* layerName,
-                                    OGRElasticDataSource* poDS,
-                                    OGRSpatialReference *poSRSIn,
-                                    int bWriteMode = FALSE);
-                        ~OGRElasticLayer();
+class OGRElasticLayer : public OGRLayer {
+    OGRFeatureDefn* poFeatureDefn;
+    OGRSpatialReference* poSRS;
+    OGRElasticDataSource* poDS;
+    CPLString sIndex;
+    void* pAttributes;
+    int nTotalFeatureCount;
+    char* pszLayerName;
+    OGRFeature* poFeature;
 
-    void                ResetReading();
-    OGRFeature *        GetNextFeature();
-    
-    OGRErr              CreateFeature( OGRFeature *poFeature );
-    OGRErr              CreateField( OGRFieldDefn *poField, int bApproxOK );
+public:
+    OGRElasticLayer(const char *pszFilename,
+            const char* layerName,
+            OGRElasticDataSource* poDS,
+            OGRSpatialReference *poSRSIn,
+            int bWriteMode = FALSE);
+    ~OGRElasticLayer();
 
-    OGRFeatureDefn *    GetLayerDefn();
-    
-    int                 TestCapability( const char * );
-    
+    void ResetReading();
+    OGRFeature * GetNextFeature();
+
+    OGRErr CreateFeature(OGRFeature *poFeature);
+    OGRErr CreateField(OGRFieldDefn *poField, int bApproxOK);
+
+    OGRFeatureDefn * GetLayerDefn();
+
+    int TestCapability(const char *);
+
     OGRSpatialReference *GetSpatialRef();
-    
-    int                 GetFeatureCount( int bForce );
 
-    void                PushIndex();
-	CPLString			BuildMap();
+    int GetFeatureCount(int bForce);
+
+    void PushIndex();
+    CPLString BuildMap();
 };
 
 /************************************************************************/
 /*                           OGRElasticDataSource                           */
+
 /************************************************************************/
 
-class OGRElasticDataSource : public OGRDataSource
-{
-    char*               pszName;
-	char*               pszServer;
+class OGRElasticDataSource : public OGRDataSource {
+    char* pszName;
+    char* pszServer;
 
-    OGRElasticLayer**    papoLayers;
-    int                 nLayers;
-    
-    int                 bUseExtensions;
-    int                 bWriteHeaderAndFooter;
+    OGRElasticLayer** papoLayers;
+    int nLayers;
 
-  public:
-                        OGRElasticDataSource();
-                        ~OGRElasticDataSource();
+    int bUseExtensions;
+    int bWriteHeaderAndFooter;
 
-    int                 Open( const char * pszFilename,
-                              int bUpdate );
-    
-    int                 Create( const char *pszFilename, 
-                              char **papszOptions );
-    
-    const char*         GetName() { return pszName; }
+public:
+    OGRElasticDataSource();
+    ~OGRElasticDataSource();
 
-    int                 GetLayerCount() { return nLayers; }
-    OGRLayer*           GetLayer( int );
-    
-    OGRLayer *          CreateLayer( const char * pszLayerName,
-                                    OGRSpatialReference *poSRS,
-                                    OGRwkbGeometryType eType,
-                                    char ** papszOptions );
+    int Open(const char * pszFilename,
+            int bUpdate);
 
-    int                 TestCapability( const char * );
-    int                 GetUseExtensions() { return bUseExtensions; }
+    int Create(const char *pszFilename,
+            char **papszOptions);
 
-	void				UploadFile(const CPLString &url, const CPLString &data);
-	void				DeleteIndex(const CPLString &url);
+    const char* GetName() {
+        return pszName;
+    }
 
-	void*				pCurl;
-	int					bOverwrite;
-	int					nBulkUpload;
-	const char*			psWriteMap;
-	const char*         psMetaFile;
-	char*				psMapping;
+    int GetLayerCount() {
+        return nLayers;
+    }
+    OGRLayer* GetLayer(int);
+
+    OGRLayer * CreateLayer(const char * pszLayerName,
+            OGRSpatialReference *poSRS,
+            OGRwkbGeometryType eType,
+            char ** papszOptions);
+
+    int TestCapability(const char *);
+
+    int GetUseExtensions() {
+        return bUseExtensions;
+    }
+
+    void UploadFile(const CPLString &url, const CPLString &data);
+    void DeleteIndex(const CPLString &url);
+
+    void* pCurl;
+    int bOverwrite;
+    int nBulkUpload;
+    const char* psWriteMap;
+    const char* psMetaFile;
+    char* psMapping;
 };
 
 /************************************************************************/
 /*                             OGRElasticDriver                             */
+
 /************************************************************************/
 
-class OGRElasticDriver : public OGRSFDriver
-{
-  public:
-						~OGRElasticDriver();
+class OGRElasticDriver : public OGRSFDriver {
+public:
+    ~OGRElasticDriver();
 
-    const char*         GetName();
-    OGRDataSource*      Open( const char *, int );
-    OGRDataSource*      CreateDataSource( const char * pszName, char **papszOptions );
-    int                 TestCapability( const char * );
-    
+    const char* GetName();
+    OGRDataSource* Open(const char *, int);
+    OGRDataSource* CreateDataSource(const char * pszName, char **papszOptions);
+    int TestCapability(const char *);
+
 };
 
 
