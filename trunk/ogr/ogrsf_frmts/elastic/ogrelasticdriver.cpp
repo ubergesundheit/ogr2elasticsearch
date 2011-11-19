@@ -35,8 +35,7 @@
 
 /************************************************************************/
 
-OGRElasticDriver::~OGRElasticDriver()
- {
+OGRElasticDriver::~OGRElasticDriver() {
 }
 
 /************************************************************************/
@@ -44,8 +43,7 @@ OGRElasticDriver::~OGRElasticDriver()
 
 /************************************************************************/
 
-const char *OGRElasticDriver::GetName()
- {
+const char *OGRElasticDriver::GetName() {
     return "ElasticSearch";
 }
 
@@ -64,8 +62,7 @@ OGRDataSource *OGRElasticDriver::Open(const char * pszFilename, int bUpdate) {
 /************************************************************************/
 
 OGRDataSource *OGRElasticDriver::CreateDataSource(const char * pszName,
-        char **papszOptions)
- {
+        char **papszOptions) {
     OGRElasticDataSource *poDS = new OGRElasticDataSource();
 
     if (!poDS->Create(pszName, papszOptions)) {
@@ -81,22 +78,19 @@ OGRDataSource *OGRElasticDriver::CreateDataSource(const char * pszName,
 
 /************************************************************************/
 
-int OGRElasticDriver::TestCapability(const char * pszCap)
- {
+int OGRElasticDriver::TestCapability(const char * pszCap) {
     if (EQUAL(pszCap, ODrCCreateDataSource))
         return TRUE;
     else
         return FALSE;
 }
 
-
 /************************************************************************/
 /*                           RegisterOGRElastic()                           */
 
 /************************************************************************/
 
-void RegisterOGRElastic()
- {
+void RegisterOGRElastic() {
     if (!GDAL_CHECK_VERSION("OGR/Elastic Search driver"))
         return;
     OGRSFDriverRegistrar::GetRegistrar()->RegisterDriver(new OGRElasticDriver);

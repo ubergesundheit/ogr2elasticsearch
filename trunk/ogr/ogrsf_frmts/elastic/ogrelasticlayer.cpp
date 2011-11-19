@@ -43,8 +43,7 @@ OGRElasticLayer::OGRElasticLayer(const char* pszFilename,
         const char* pszLayerName,
         OGRElasticDataSource* poDS,
         OGRSpatialReference *poSRSIn,
-        int bWriteMode)
- {
+        int bWriteMode) {
     this->pszLayerName = CPLStrdup(pszLayerName);
     this->poDS = poDS;
     this->pAttributes = NULL;
@@ -82,8 +81,7 @@ OGRElasticLayer::OGRElasticLayer(const char* pszFilename,
 
 /************************************************************************/
 
-OGRElasticLayer::~OGRElasticLayer()
- {
+OGRElasticLayer::~OGRElasticLayer() {
     PushIndex();
     //poFeatureDefn->Release();
 
@@ -280,8 +278,7 @@ void OGRElasticLayer::PushIndex() {
 
 /************************************************************************/
 
-OGRErr OGRElasticLayer::CreateField(OGRFieldDefn *poFieldDefn, int bApproxOK)
- {
+OGRErr OGRElasticLayer::CreateField(OGRFieldDefn *poFieldDefn, int bApproxOK) {
     if (!pAttributes) {
         pAttributes = json_object_new_object();
     }
@@ -303,7 +300,7 @@ OGRErr OGRElasticLayer::CreateField(OGRFieldDefn *poFieldDefn, int bApproxOK)
         default:
 
             // These types are mapped as strings and may not be correct
-            /*		
+            /*
                             OFTTime:
                             OFTIntegerList = 1,
                             OFTRealList = 3,
@@ -325,8 +322,7 @@ OGRErr OGRElasticLayer::CreateField(OGRFieldDefn *poFieldDefn, int bApproxOK)
 
 /************************************************************************/
 
-int OGRElasticLayer::TestCapability(const char * pszCap)
- {
+int OGRElasticLayer::TestCapability(const char * pszCap) {
     if (EQUAL(pszCap, OLCFastFeatureCount))
         return FALSE;
 
@@ -344,8 +340,7 @@ int OGRElasticLayer::TestCapability(const char * pszCap)
 
 /************************************************************************/
 
-int OGRElasticLayer::GetFeatureCount(int bForce)
- {
+int OGRElasticLayer::GetFeatureCount(int bForce) {
     CPLError(CE_Failure, CPLE_NotSupported,
             "Cannot read features when writing a Elastic file");
     return 0;
