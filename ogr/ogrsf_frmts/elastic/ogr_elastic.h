@@ -47,9 +47,7 @@ class OGRElasticLayer : public OGRLayer {
     OGRElasticDataSource* poDS;
     CPLString sIndex;
     void* pAttributes;
-    int nTotalFeatureCount;
     char* pszLayerName;
-    OGRFeature* poFeature;
 
 public:
     OGRElasticLayer(const char *pszFilename,
@@ -89,9 +87,6 @@ class OGRElasticDataSource : public OGRDataSource {
     OGRElasticLayer** papoLayers;
     int nLayers;
 
-    int bUseExtensions;
-    int bWriteHeaderAndFooter;
-
 public:
     OGRElasticDataSource();
     ~OGRElasticDataSource();
@@ -118,19 +113,13 @@ public:
 
     int TestCapability(const char *);
 
-    int GetUseExtensions() {
-        return bUseExtensions;
-    }
-
     void UploadFile(const CPLString &url, const CPLString &data);
     void DeleteIndex(const CPLString &url);
 
-    void* pCurl;
     int bOverwrite;
     int nBulkUpload;
-    const char* psWriteMap;
-    const char* psMetaFile;
-    char* psMapping;
+    char* pszWriteMap;
+    char* pszMapping;
 };
 
 /************************************************************************/
