@@ -27,6 +27,8 @@
  * DEALINGS IN THE SOFTWARE.
  ****************************************************************************/
 
+#pragma warning( disable : 4251 )
+
 #include "ogr_elastic.h"
 #include "cpl_conv.h"
 #include "cpl_string.h"
@@ -42,8 +44,6 @@ OGRElasticDataSource::OGRElasticDataSource() {
     papoLayers = NULL;
     nLayers = 0;
     pszName = NULL;
-    bUseExtensions = FALSE;
-    bWriteHeaderAndFooter = TRUE;
 }
 
 /************************************************************************/
@@ -56,6 +56,8 @@ OGRElasticDataSource::~OGRElasticDataSource() {
         delete papoLayers[i];
     CPLFree(papoLayers);
     CPLFree(pszName);
+	CPLFree(pszMapping);
+	CPLFree(pszWriteMap);
 }
 
 /************************************************************************/
@@ -140,19 +142,24 @@ void OGRElasticDataSource::UploadFile(const CPLString &url, const CPLString &dat
 
 int OGRElasticDataSource::Create(const char *pszFilename,
         char **papszOptions) {
-    this->psMapping = NULL;
-    this->psWriteMap = CPLGetConfigOption("ES_WRITEMAP", NULL);
-    this->psMetaFile = CPLGetConfigOption("ES_META", NULL);
+    
+	this->pszMapping = NULL;
+	this->pszWriteMap = NULL;
+	this->pszName = CPLStrdup(pszFilename);
+
+	const char* pszMetaFile = CPLGetConfigOption("ES_META", NULL);
+	const char* pszWriteMap = CPLGetConfigOption("ES_WRITEMAP", NULL);;
     this->bOverwrite = (int) CPLAtof(CPLGetConfigOption("ES_OVERWRITE", "0"));
     this->nBulkUpload = (int) CPLAtof(CPLGetConfigOption("ES_BULK", "0"));
 
     // Read in the meta file from disk
-    if (this->psMetaFile != NULL) {
+    if (pszWriteMap != NULL) {
+		this->pszWriteMap = CPLStrdup(pszWriteMap);
         int fsize;
         char *fdata;
         FILE *fp;
 
-        fp = fopen(this->psMetaFile, "rb");
+        fp = fopen(pszMetaFile, "rb");
         if (fp != NULL) {
             fseek(fp, 0, SEEK_END);
             fsize = (int) ftell(fp);
@@ -162,7 +169,8 @@ int OGRElasticDataSource::Create(const char *pszFilename,
             fseek(fp, 0, SEEK_SET);
             fread(fdata, fsize, 1, fp);
             fdata[fsize] = 0;
-            this->psMapping = fdata;
+            this->pszMapping = fdata;
+			fclose(fp);
         }
     }
 
@@ -176,6 +184,5 @@ int OGRElasticDataSource::Create(const char *pszFilename,
         return FALSE;
     }
 
-    pszName = CPLStrdup(pszFilename);
     return TRUE;
 }

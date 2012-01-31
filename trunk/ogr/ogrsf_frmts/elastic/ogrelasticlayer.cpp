@@ -57,9 +57,9 @@ OGRElasticLayer::OGRElasticLayer(const char* pszFilename,
     poDS->UploadFile(CPLSPrintf("%s/%s", poDS->GetName(), pszLayerName), "");
 
     // If we have a user specified mapping, then go ahead and update it now
-    if (poDS->psMapping != NULL) {
+    if (poDS->pszMapping != NULL) {
         poDS->UploadFile(CPLSPrintf("%s/%s/FeatureCollection/_mapping", poDS->GetName(), pszLayerName),
-                poDS->psMapping);
+                poDS->pszMapping);
     }
 
     poFeatureDefn = new OGRFeatureDefn(pszLayerName);
@@ -69,9 +69,6 @@ OGRElasticLayer::OGRElasticLayer(const char* pszFilename,
     if (poSRS)
         poSRS->Reference();
 
-    nTotalFeatureCount = 0;
-
-    poFeature = NULL;
     ResetReading();
     return;
 }
@@ -83,13 +80,10 @@ OGRElasticLayer::OGRElasticLayer(const char* pszFilename,
 
 OGRElasticLayer::~OGRElasticLayer() {
     PushIndex();
-    //poFeatureDefn->Release();
+    poFeatureDefn->Release();
 
     if (poSRS != NULL)
         poSRS->Release();
-
-    if (poFeature)
-        delete poFeature;
 }
 
 
@@ -170,6 +164,7 @@ CPLString OGRElasticLayer::BuildMap() {
     json_object_put(map);
 
     // The attribute's were freed from the deletion of the map object
+	// because we added it as a child of one of the map object attributes
     if (pAttributes) {
         pAttributes = NULL;
     }
@@ -181,12 +176,12 @@ OGRErr OGRElasticLayer::CreateFeature(OGRFeature *poFeature) {
 
     // Check to see if the user has elected to only write out the mapping file
     // This method will only write out one layer from the vector file in cases where there are multiple layers
-    if (poDS->psWriteMap != NULL) {
+    if (poDS->pszWriteMap != NULL) {
         if (pAttributes) {
             CPLString map = BuildMap();
 
             // Write the map to a file
-            FILE *f = fopen(poDS->psWriteMap, "wb");
+            FILE *f = fopen(poDS->pszWriteMap, "wb");
             if (f) {
                 fwrite(map.c_str(), 1, map.length(), f);
                 fclose(f);
@@ -196,12 +191,15 @@ OGRErr OGRElasticLayer::CreateFeature(OGRFeature *poFeature) {
     }
 
     // Check to see if we have any fields to upload to this index
-    if (poDS->psMapping == NULL && pAttributes) {
+    if (poDS->pszMapping == NULL && pAttributes) {
         poDS->UploadFile(CPLSPrintf("%s/%s/FeatureCollection/_mapping", poDS->GetName(), pszLayerName), BuildMap());
     }
 
     // Get the center point of the geometry
     OGREnvelope env;
+	if (!poFeature->GetGeometryRef()) {
+		return OGRERR_FAILURE;
+	}
     poFeature->GetGeometryRef()->getEnvelope(&env);
 
     json_object *fieldObject = json_object_new_object();
@@ -220,20 +218,23 @@ OGRErr OGRElasticLayer::CreateFeature(OGRFeature *poFeature) {
     // For every field that
     int fieldCount = poFeatureDefn->GetFieldCount();
     for (int i = 0; i < fieldCount; i++) {
+		if(!poFeature->IsFieldSet( i ) ) {
+			continue;
+		}
         switch (poFeatureDefn->GetFieldDefn(i)->GetType()) {
             case OFTInteger:
                 json_object_object_add(properties,
                         poFeatureDefn->GetFieldDefn(i)->GetNameRef(),
-                        json_object_new_int(poFeature->GetFieldAsInteger(poFeatureDefn->GetFieldDefn(i)->GetNameRef())));
+                        json_object_new_int(poFeature->GetFieldAsInteger(i)));
                 break;
             case OFTReal:
                 json_object_object_add(properties,
                         poFeatureDefn->GetFieldDefn(i)->GetNameRef(),
-                        json_object_new_double(poFeature->GetFieldAsDouble(poFeatureDefn->GetFieldDefn(i)->GetNameRef())));
+                        json_object_new_double(poFeature->GetFieldAsDouble(i)));
                 break;
             default:
             {
-                CPLString tmp = poFeature->GetFieldAsString(poFeatureDefn->GetFieldDefn(i)->GetNameRef());
+                CPLString tmp = poFeature->GetFieldAsString(i);
                 json_object_object_add(properties,
                         poFeatureDefn->GetFieldDefn(i)->GetNameRef(),
                         json_object_new_string(tmp));
@@ -244,8 +245,6 @@ OGRErr OGRElasticLayer::CreateFeature(OGRFeature *poFeature) {
     // Build the field string
     CPLString fields(json_object_to_json_string(fieldObject));
     json_object_put(fieldObject);
-
-    nTotalFeatureCount++;
 
     // Check to see if we're using bulk uploading
     if (poDS->nBulkUpload > 0) {
